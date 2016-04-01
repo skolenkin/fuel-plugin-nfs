@@ -1,4 +1,4 @@
-NFS Server Plugin for Cinder
+External NFS backend for Cinder
 ============
 
 NFS plugin is a Cinder extension (configuring cinder volume service to use NFS storage).

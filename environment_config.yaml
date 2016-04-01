@@ -1,11 +1,40 @@
 attributes:
-  metadata:
-    # Settings group can be one of "general", "security", "compute", "network",
-    # "storage", "logging", "openstack_services" and "other".
-    group: 'other'
-  fuel-plugin-nfs_text:
-    value: 'Set default value'
-    label: 'Text field'
-    description: 'Description for text field'
+  nfs_endpoint:
+    value: '/nfs'
+    label: 'NFS endpoints (Shared folder on NFS Server)'
+    description: 'e.g. /nfs/vol'
     weight: 25
     type: "text"
+    regex:
+      source: '.+'
+      error: "This field should not be empty"
+  nfs_mount_options:
+    value: ''
+    label: 'NFS mount options'
+    description: 'optional NFS mount parameters'
+    weight: 25
+    type: "text"
+  nfs_mount_point:
+    value: '/mnt/nfs'
+    label: 'Cinder mount point base folder:'
+    description: 'e.g. /mnt/nfs'
+    weight: 20
+    type: 'text'
+    regex:
+      source: '.+'
+      error: "This field should not be empty"
+  nfs_net_mask:
+    value: '255.255.255.0'
+    label: 'NFS Network Mask:'
+    description: 'e.g. 255.255.255.0'
+    weight: 30
+    type: 'text'
+    regex:
+      source: '.+'
+      error: "This field should not be empty"
+  nfs_sparsed_volumes:
+    type: "checkbox"
+    weight: 30
+    value: false
+    label: "NFS sparsed volumes"
+    description: ""
