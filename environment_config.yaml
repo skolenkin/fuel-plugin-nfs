@@ -35,6 +35,6 @@ attributes:
   nfs_sparsed_volumes:
     type: "checkbox"
     weight: 30
-    value: false
+    value: True
     label: "NFS sparsed volumes"
     description: ""

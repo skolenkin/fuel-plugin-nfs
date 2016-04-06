@@ -27,22 +27,27 @@ define nfs_server_ip {
 }
 
 if $::osfamily == 'Debian' {
-  $required_pkgs = [ 'cinder-volume' ]
+  $required_pkgs = [ 'nfs-common', 'cinder-volume' ]
   $service_name = 'cinder-volume'
 
   package { $required_pkgs:
     ensure => present,
   }
 
-  service { $service_name:
-    ensure => running,
+  service { 'cinder-volume':
+    ensure => "running",
+    provider => "upstart",
+    hasrestart => "true",
+    hasstatus => "false",
+    restart => 'service cinder-volume restart',
   }
 
   file { $cinder_nfs_share:
     ensure => present,
     owner  => 'cinder',
     group  => 'cinder',
-    notify => Service[$service_name]
+    force  => 'true',
+    notify => Service["cinder-volume"]
   }
 
   file { $nfs_mount_point:
@@ -60,7 +65,7 @@ if $::osfamily == 'Debian' {
     'DEFAULT/nfs_shares_config' :
       value => $cinder_nfs_share;
     'DEFAULT/nfs_sparsed_volumes' :
-      value => 'True';
+      value => $nfs_sparsed_volumes;
     'DEFAULT/nfs_oversub_ratio' :
       value => '1.0';
     'DEFAULT/nfs_used_ratio' :
@@ -70,7 +75,7 @@ if $::osfamily == 'Debian' {
     'DEFAULT/nfs_mount_point_base' :
       value => $nfs_mount_point;
     'DEFAULT/nfs_mount_options' :
-      value => '';
+      value => $nfs_mount_options;
   }
   
   nfs_server_ip { $nodes: }

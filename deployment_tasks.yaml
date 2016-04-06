@@ -12,7 +12,7 @@
 
 - id: nfs-common-setup
   type: puppet
-  role: [cinder]
+  role: [primary-controller, controller, cinder]
   required_for: [post_deployment_end]
   requires: [post_deployment_start]
   parameters:
@@ -27,5 +27,5 @@
   requires: [post_deployment_start]
   parameters:
     puppet_manifest: "puppet/nfs-server.pp"
-    puppet_modules: "/etc/puppet/modules/"
+    puppet_modules: "/etc/puppet/modules"
     timeout: 3600
