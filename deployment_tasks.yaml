@@ -10,14 +10,24 @@
     strategy:
       type: one_by_one
 
-- id: nfs-common-setup
+- id: controller-nfs
   type: puppet
-  role: [primary-controller, controller, cinder]
+  role: [primary-controller, controller]
   required_for: [post_deployment_end]
   requires: [post_deployment_start]
   parameters:
-    puppet_manifest: "puppet/nfs-common-cinder.pp"
-    puppet_modules: "/etc/puppet/modules"
+    puppet_manifest: "puppet/manifests/nfs-common-cinder.pp"
+    puppet_modules: "puppet/modules:/etc/puppet/modules/"
+    timeout: 3600
+
+- id: cinder-nfs
+  type: puppet
+  role: [cinder]
+  required_for: [post_deployment_end]
+  requires: [post_deployment_start]
+  parameters:
+    puppet_manifest: "puppet/manifests/nfs-common-cinder.pp"
+    puppet_modules: "puppet/modules:/etc/puppet/modules/"
     timeout: 3600
 
 - id: nfs-server-setup
@@ -26,6 +36,6 @@
   required_for: [post_deployment_end]
   requires: [post_deployment_start]
   parameters:
-    puppet_manifest: "puppet/nfs-server.pp"
-    puppet_modules: "/etc/puppet/modules"
+    puppet_manifest: "puppet/manifests/nfs-server.pp"
+    puppet_modules: "puppet/modules:/etc/puppet/modules"
     timeout: 3600

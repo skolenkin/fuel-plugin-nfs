@@ -1,7 +1,7 @@
 # Plugin name
 name: fuel-plugin-nfs
 # Human-readable name for your plugin
-title: NFS Server for Cinder
+title: Cinder and NFS intergration
 # Plugin version
 version: '1.0.0'
 # Description
@@ -17,7 +17,7 @@ homepage: 'https://github.com/skolenkin/fuel-plugin-nfs.git'
 # Specify a group which your plugin implements, possible options:
 # network, storage, storage::cinder, storage::glance, hypervisor,
 # equipment
-groups: [storage]
+groups: ['storage::cinder']
 # Change `false` to `true` if the plugin can be installed in the environment
 # after the deployment.
 is_hotpluggable: false
